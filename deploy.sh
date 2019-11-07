@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-FILES=(.bashrc .bash_profile .screenrc .vimrc .tmux.conf .ssh/rc)
+FILES=(.bashrc .bash_profile .screenrc .vimrc .tmux.conf .ssh/rc .zshrc)
 
 if [[ ! -d ~ ]]
 then
