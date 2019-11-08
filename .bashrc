@@ -77,9 +77,19 @@ BRIGHT_WHITE="\[\033[01;37m\]"
 # TODO: give a different symbol for changes, new files, deleted files in git
 # TODO: move the user name and current working directory
 
+# We will print a horizontal line after each command, colored red for failed commands
+# This figures out its width: COLUMNS - 4 if we are in a Python virtualenv, COLUMNS otherwise
+if [[ "$(python -c 'import sys; print (sys.base_prefix == sys.prefix)' 2>/dev/null)" == \
+      "False" ]]
+then
+    HLINE_WIDTH=$((COLUMNS - 7)) # virtual envs print "(venv) " before the prompt
+else
+    HLINE_WIDTH=$COLUMNS
+fi
+
 export PS1="\
 \$(if [[ \$? -ne 0 ]] ; then echo -n '\[\033[01;31m\]' ; fi)\
-\$(i=0 ; while [[ i -lt COLUMNS ]] ; do echo -n '_'; : \$((i=i+1)) ; done)\n\
+\$(i=0 ; while [[ i -lt HLINE_WIDTH ]] ; do echo -n '_'; : \$((i=i+1)) ; done)\n\
 ${BRIGHT_YELLOW}| ${BRIGHT_CYAN}\w ${UNCOLORED_TEXT}@ ${BRIGHT_GREEN}\h ${BRIGHT_BLUE}(\u) \
 ${UNCOLORED_TEXT}[${BRIGHT_MAGENTA}\t${UNCOLORED_TEXT}] \
 ${BRIGHT_YELLOW}\$(git branch 2>/dev/null | awk '\$1 == \"*\" { print \$2 }') \
