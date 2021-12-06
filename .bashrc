@@ -5,10 +5,9 @@
 # for examples
 
 # If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+if [[ -z $PS1 ]] ; then
+  return
+fi
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -187,12 +186,29 @@ if type python3 &> /dev/null ; then
 fi
 
 # homebrew
-BREW_DIR=/opt/homebrew
-BREW_BIN_DIR=${BREW_DIR}/bin
-BREW_BIN=${BREW_BIN_DIR}/brew
-if [[ -e ${BREW_BIN} ]] ; then
-  eval "$(${BREW_BIN} shellenv)"
-fi
+put_last_in_path() {
+  path="$1"
+  putlast="$2"
+  echo -n "${path}" | \
+    awk -v RS=':' \
+        -v ORS=':' \
+        -v putlast="${putlast}" \
+    '$0 !~ putlast {print}'
+  echo "${putlast}"
+}
+BREW_LOCATIONS=(/opt/homebrew ~/.linuxbrew)
+# /usr/local/ is not listed above because I don't want /usr/local/bin/ to be
+# put last in the PATH, as the brew location will be after planned future
+# changes.
+for brew_location in ${BREW_LOCATIONS[@]} ; do
+  brew_file=${brew_location}/bin/brew
+  if [[ -e ${brew_file} ]] ; then
+    eval "$(${brew_file} shellenv)"
+    for d in "${brew_location}/bin" "${brew_location}/sbin" ; do
+      export PATH=$(put_last_in_path "${PATH}" "${d}")
+    done
+  fi
+done
 
 # pyenv
 if type pyenv &> /dev/null ; then
@@ -233,6 +249,11 @@ fi
 alias awscli='docker run --rm -v ~/.aws:/root/.aws amazon/aws-cli:latest'
 alias awsman='docker run --rm -it amazon/aws-cli:latest'
 
+function say_path ()
+{
+  echo $PATH | awk -v RS=':' {print}
+}
+
 # company/job/project-specific configuration
 COMPANY_CONFIG=/usr/local/etc/profile.sh
 if [[ -e ${COMPANY_CONFIG} ]] ; then
@@ -241,19 +262,9 @@ fi
 
 function dedup_awk ()
 {
-  echo "$1" | awk -v RS=: \
-    'BEGIN { first_entry = 1; }
-    {
-      if(! a[$0]) {
-        a[$0] = 1;
-        if(first_entry) {
-          first_entry = 0;
-        } else {
-          printf(":");
-        }
-        printf("%s", $0);
-      }
-    }'
+  echo -n "$1" | awk -v RS=':' -v ORS=':' \
+    'a[$0] != 1 { print ; a[$0] = 1 ; }' | \
+    sed 's/:$//'
 }
 DEDUPED_PATH=$(dedup_awk ${PATH})
 if [[ "${DEDUPED_PATH}" != "${PATH}" ]] ; then
