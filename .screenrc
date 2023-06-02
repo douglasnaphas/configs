@@ -1,9 +1,6 @@
 # fix ssh agent forwarding
 setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 
-# Version: 1
-# Revision: 2
-# Last Update: 2014/03/05
 # Look and feel
 hardstatus on
 hardstatus alwayslastline "%{= d} %{= d}%-w%{= r}[%{= W}%n %t%{= r}]%{= d}%+w %-= %{G}%H %{W}| %{= c}%c%{-}"
@@ -23,3 +20,5 @@ screen -L 3
 select 0
 
 defscrollback 20000
+
+shell "/bin/bash"
