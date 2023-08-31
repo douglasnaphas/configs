@@ -97,6 +97,9 @@ ${BRIGHT_RED}\$(test \$(git status --porcelain 2>/dev/null | wc -l) -ne 0 && ech
 \n${BRIGHT_YELLOW}| ${BRIGHT_MAGENTA}\! ${BRIGHT_YELLOW}=> ${UNCOLORED_TEXT}"
 export PS2="| => "
 
+# Common grep options
+alias grepo='grep -rIn --color --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=exclude --exclude-dir=cdk.out'
+
 # Colored output
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
