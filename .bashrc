@@ -282,3 +282,9 @@ if [ -f '/usr/local/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/usr/lo
 
 # This silences the warning message about how the default shell is zsh
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# direnv
+# https://direnv.net/
+if type direnv &> /dev/null ; then
+  eval "$(direnv hook bash)"
+fi
