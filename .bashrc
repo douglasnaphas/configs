@@ -290,3 +290,10 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 if type direnv &> /dev/null ; then
   eval "$(direnv hook bash)"
 fi
+
+# For inspecting TLS certs
+# https://stackoverflow.com/questions/42635253/display-received-cert-with-curl
+function seecert () {
+  nslookup $1
+  (openssl s_client -showcerts -servername $1 -connect $1:443 <<< "Q" | openssl x509 -text | grep -iA2 "Validity")
+}
