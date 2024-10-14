@@ -6,3 +6,7 @@
 exclude/
 .vscode/*.log
 *.pem
+
+# Ignore Zone.Identifier objects
+# They tell Windows where files were downloaded from
+*:Zone.Identifier
