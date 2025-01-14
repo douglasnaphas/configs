@@ -1,0 +1,13 @@
+if-shell -b "which reattach-to-user-namespace" "set -g default-command 'reattach-to-user-namespace -l /bin/bash'"
+
+# fix ssh agent, ~/.ssh/rc should symlink from ~/.ssh/ssh_auth_sock to SSH_AUTH_SOCK at the
+# start of each connection
+setenv -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+
+set -g update-environment -r
+
+if-shell "test -e /usr/local/bin/bash" "set-option -g default-shell /usr/local/bin/bash"
+
+set-option -g default-shell "/opt/homebrew/bin/bash"
+set-option -g default-command "/opt/homebrew/bin/bash"
+
