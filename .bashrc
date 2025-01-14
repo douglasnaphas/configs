@@ -270,7 +270,6 @@ if [[ -e ${NON_ROOT_CONIG} ]] ; then
   source ${NON_ROOT_CONFIG}
 fi
 
-
 function dedup_awk ()
 {
   echo -n "$1" | awk -v RS=':' -v ORS=':' \
