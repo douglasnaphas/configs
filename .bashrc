@@ -266,7 +266,7 @@ if [[ -e ${COMPANY_CONFIG} ]] ; then
 fi
 # When you would edit COMPANY_CONFIG, but you can't sudo
 NON_ROOT_CONFIG=${HOME}/.bashrc.non-root
-if [[ -e ${NON_ROOT_CONIG} ]] ; then
+if [[ -e ${NON_ROOT_CONFIG} ]] ; then
   source ${NON_ROOT_CONFIG}
 fi
 
