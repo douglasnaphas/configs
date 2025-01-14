@@ -159,8 +159,7 @@ if [[ -e ${GO_BIN} && ! ${PATH} =~ (:|^)${GO_BIN_DIR}(:|$) ]] ; then
 	export PATH=${PATH}:${GO_BIN_DIR}
 fi
 DEFAULT_GOBIN=~/go/bin
-if [[ -d ${DEFAULT_GOBIN} && ! ${PATH} =~ (:|^)${DEFAULT_GOBIN}(:|$) ]] ; then
-	export PATH=${PATH}:${DEFAULT_GOBIN}
+if [[ -d ${DEFAULT_GOBIN} && ! ${PATH} =~ (:|^)${DEFAULT_GOBIN}(:|$) ]] ; then	export PATH=${PATH}:${DEFAULT_GOBIN}
 fi
 
 # Put ~/bin on the path if it exists.
@@ -212,6 +211,11 @@ for brew_location in ${BREW_LOCATIONS[@]} ; do
     done
   fi
 done
+
+# Make sure /usr/local/bin is on the PATH, lower precedence than pyenv
+if [[ -d /usr/local/bin ]] ; then
+  export PATH=/usr/local/bin:${PATH}
+fi
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
