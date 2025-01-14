@@ -8,3 +8,6 @@ set -g update-environment -r
 
 if-shell "test -e /usr/local/bin/bash" "set-option -g default-shell /usr/local/bin/bash"
 
+set-option -g default-shell "/opt/homebrew/bin/bash"
+set-option -g default-command "/opt/homebrew/bin/bash"
+
