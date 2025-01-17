@@ -147,7 +147,7 @@ fi
 
 # golang
 LENGTH_1="1" # non-zero length
-DESIRED_GOPATH=~/gopath
+DESIRED_GOPATH="$HOME/gopath"
 GO_INSTALL_PATH=/usr/local/go
 if [[ -z ${GOPATH+LENGTH_1} && -e ${GO_INSTALL_PATH} && -d ${DESIRED_GOPATH} ]] ; then
 	export GOPATH=${DESIRED_GOPATH}
@@ -156,16 +156,16 @@ unset LENGTH_1
 GO_BIN=/usr/local/go/bin/go
 GO_BIN_DIR=$(dirname ${GO_BIN})
 if [[ -e ${GO_BIN} && ! ${PATH} =~ (:|^)${GO_BIN_DIR}(:|$) ]] ; then
-	export PATH=${PATH}:${GO_BIN_DIR}
+	export PATH="${PATH}:${GO_BIN_DIR}"
 fi
-DEFAULT_GOBIN=~/go/bin
-if [[ -d ${DEFAULT_GOBIN} && ! ${PATH} =~ (:|^)${DEFAULT_GOBIN}(:|$) ]] ; then	export PATH=${PATH}:${DEFAULT_GOBIN}
+DEFAULT_GOBIN="$HOME/go/bin"
+if [[ -d ${DEFAULT_GOBIN} && ! ${PATH} =~ (:|^)${DEFAULT_GOBIN}(:|$) ]] ; then	export PATH="${PATH}:${DEFAULT_GOBIN}"
 fi
 
 # Put ~/bin on the path if it exists.
-HOMEBIN=~/bin
+HOMEBIN="$HOME/bin"
 if [[ -d ~/bin && ! "${PATH}" =~ ${HOMEBIN} ]] ; then
-	export PATH=${HOMEBIN}:${PATH}
+	export PATH="${HOMEBIN}:${PATH}"
 fi
 
 # Make sure the location of installed Python2 scripts is in PATH
@@ -174,7 +174,7 @@ if type python &> /dev/null ; then
   if [[ -n ${PY_USER_BIN} && \
         -e ${PY_USER_BIN} && \
         ! "${PATH}" =~ ${PY_USER_BIN} ]] ; then
-    export PATH=${PY_USER_BIN}:${PATH}
+    export PATH="${PY_USER_BIN}:${PATH}"
   fi
 fi
 # Make sure the location of installed Python3 scripts is in PATH
@@ -183,7 +183,7 @@ if type python3 &> /dev/null ; then
   if [[ -n ${PY3_USER_BIN} && \
         -e ${PY3_USER_BIN} && \
         ! "${PATH}" =~ ${PY3_USER_BIN} ]] ; then
-    export PATH=${PY3_USER_BIN}:${PATH}
+    export PATH="${PY3_USER_BIN}:${PATH}"
   fi
 fi
 
@@ -198,7 +198,7 @@ put_last_in_path() {
     '$0 !~ putlast {print}'
   echo "${putlast}"
 }
-BREW_LOCATIONS=(/opt/homebrew ~/.linuxbrew)
+BREW_LOCATIONS=(/opt/homebrew "$HOME/.linuxbrew")
 # /usr/local/ is not listed above because I don't want /usr/local/bin/ to be
 # put last in the PATH, as the brew location will be after planned future
 # changes.
@@ -214,7 +214,7 @@ done
 
 # Make sure /usr/local/bin is on the PATH, lower precedence than pyenv
 if [[ -d /usr/local/bin ]] ; then
-  export PATH=/usr/local/bin:${PATH}
+  export PATH="/usr/local/bin:${PATH}"
 fi
 
 # pyenv
@@ -225,9 +225,9 @@ if type pyenv &> /dev/null ; then
 fi
 
 # pipx
-DOT_LOCAL_BIN=~/.local/bin
-if [[ -d ${DOT_LOCAL_BIN} && ! "${PATH}" =~ ${DOT_LOCAL_BIN} ]] ; then
-	export PATH=${DOT_LOCAL_BIN}:${PATH}
+DOT_LOCAL_BIN="$HOME/.local/bin"
+if [[ -d "${DOT_LOCAL_BIN}" && ! "${PATH}" =~ "${DOT_LOCAL_BIN}" ]] ; then
+	export PATH="${DOT_LOCAL_BIN}:${PATH}"
 fi
 
 # rbenv
@@ -249,9 +249,9 @@ export NVM_DIR="$HOME/.nvm"
 # Python poetry
 # https://poetry.eustace.io/
 # https://github.com/sdispater/poetry
-DOT_POETRY_BIN=~/.poetry/bin
+DOT_POETRY_BIN="$HOME/.poetry/bin"
 if [[ -d ${DOT_POETRY_BIN} && ! "${PATH}" =~ ${DOT_POETRY_BIN} ]] ; then
-	export PATH=${DOT_POETRY_BIN}:${PATH}
+	export PATH="${DOT_POETRY_BIN}:${PATH}"
 fi
 
 # aws cli
@@ -282,7 +282,7 @@ function dedup_awk ()
 }
 DEDUPED_PATH=$(dedup_awk ${PATH})
 if [[ "${DEDUPED_PATH}" != "${PATH}" ]] ; then
-  export PATH=${DEDUPED_PATH}
+  export PATH="${DEDUPED_PATH}"
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
