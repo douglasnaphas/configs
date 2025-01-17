@@ -1,6 +1,9 @@
 #!/bin/bash
 
-FILES=(.bashrc .bash_profile .screenrc .vimrc .tmux.conf .ssh/rc .gitignore)
+# no .tmux.conf, because you might need either of:
+# 	.tmux.conf
+# 	.tmux.conf.brew-bash-no-root
+FILES=(.bashrc .bash_profile .screenrc .vimrc .ssh/rc .gitignore)
 
 if [[ ! -d ~ ]]
 then
@@ -36,3 +39,7 @@ then
 fi
 
 exit 0
+
+echo -n "WARNING:"
+echo -n "No .tmux.conf deployed. You might need .tmux.conf, or"
+echo ' .tmux.conf.brew-bash-no-root. Do `cp <tmux conf file> ~/.tmux.conf`.'
