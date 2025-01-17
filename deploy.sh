@@ -38,8 +38,8 @@ then
 	echo "See https://github.com/jonmosco/kube-ps1."
 fi
 
-exit 0
-
 echo -n "WARNING:"
 echo -n "No .tmux.conf deployed. You might need .tmux.conf, or"
 echo ' .tmux.conf.brew-bash-no-root. Do `cp <tmux conf file> ~/.tmux.conf`.'
+
+exit 0
