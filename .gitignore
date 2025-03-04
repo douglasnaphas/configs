@@ -4,6 +4,7 @@
 *~
 .DS_Store
 exclude/
+.vscode/
 .vscode/*.log
 *.pem
 
