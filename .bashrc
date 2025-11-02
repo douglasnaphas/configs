@@ -90,10 +90,12 @@ fi
 export PS1="\
 \$(if [[ \$? -ne 0 ]] ; then echo -n '\[\033[01;31m\]' ; fi)\
 \$(i=0 ; while [[ i -lt COLUMNS ]] ; do echo -n '_'; : \$((i=i+1)) ; done)\n\
-${BRIGHT_YELLOW}|${UNCOLORED_TEXT}\$(if kube_ps1 &>/dev/null ; then echo -n ' ' ; kube_ps1 ; fi) ${BRIGHT_CYAN}\w ${UNCOLORED_TEXT}@ ${BRIGHT_GREEN}\h ${BRIGHT_BLUE}(\u) \
+${BRIGHT_YELLOW}|${UNCOLORED_TEXT}\$(if kube_ps1 &>/dev/null ; then echo -n ' ' ; kube_ps1 ; fi) ${BRIGHT_CYAN}\w \
 ${UNCOLORED_TEXT}[${BRIGHT_MAGENTA}\t${UNCOLORED_TEXT}] \
 ${BRIGHT_YELLOW}\$(git branch 2>/dev/null | awk '\$1 == \"*\" { print \$2 }') \
 ${BRIGHT_RED}\$(test \$(git status --porcelain 2>/dev/null | wc -l) -ne 0 && echo -ne \"\xce\x94\") \
+${BRIGHT_GREEN}${AWS_PROFILE}${UNCOLORED_TEXT} \
+${BRIGHT_BLUE}${AWS_REGION}${UNCOLORED_TEXT} \
 \n${BRIGHT_YELLOW}| ${BRIGHT_MAGENTA}\! ${BRIGHT_YELLOW}=> ${UNCOLORED_TEXT}"
 export PS2="| => "
 
