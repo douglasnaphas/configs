@@ -317,3 +317,8 @@ function seecert () {
 
 # Projen
 alias pj='npm_config_registry=https://registry.npmjs.org npx --yes projen'
+
+# granted
+if [ -f /opt/homebrew/bin/assume ] ; then
+  alias assume="source /opt/homebrew/bin/assume"
+fi
