@@ -62,6 +62,7 @@ BLUE="\[\033[34m\]"
 MAGENTA="\[\033[35m\]"
 CYAN="\[\033[36m\]"
 WHITE="\[\033[37m\]"
+ORANGE="\[\033[38;5;208m\]"
 
 BRIGHT_BLACK="\[\033[01;30m\]"
 BRIGHT_RED="\[\033[01;31m\]"
@@ -71,6 +72,7 @@ BRIGHT_BLUE="\[\033[01;34m\]"
 BRIGHT_MAGENTA="\[\033[01;35m\]"
 BRIGHT_CYAN="\[\033[01;36m\]"
 BRIGHT_WHITE="\[\033[01;37m\]"
+BRIGHT_ORANGE="\[\033[38;5;214m\]"
 
 # TODO: alternate colors while printing sub-dir names. Keep the slash the same color.
 # TODO: give a different symbol for changes, new files, deleted files in git
@@ -94,8 +96,8 @@ ${BRIGHT_YELLOW}|${UNCOLORED_TEXT}\$(if kube_ps1 &>/dev/null ; then echo -n ' ' 
 ${UNCOLORED_TEXT}[${BRIGHT_MAGENTA}\t${UNCOLORED_TEXT}] \
 ${BRIGHT_YELLOW}\$(git branch 2>/dev/null | awk '\$1 == \"*\" { print \$2 }') \
 ${BRIGHT_RED}\$(test \$(git status --porcelain 2>/dev/null | wc -l) -ne 0 && echo -ne \"\xce\x94\") \
-${BRIGHT_GREEN}${AWS_PROFILE}${UNCOLORED_TEXT} \
-${BRIGHT_BLUE}${AWS_REGION}${UNCOLORED_TEXT} \
+${BRIGHT_ORANGE}${AWS_PROFILE}${UNCOLORED_TEXT} \
+${ORANGE}${AWS_REGION}${UNCOLORED_TEXT} \
 \n${BRIGHT_YELLOW}| ${BRIGHT_MAGENTA}\! ${BRIGHT_YELLOW}=> ${UNCOLORED_TEXT}"
 export PS2="| => "
 
