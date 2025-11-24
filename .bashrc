@@ -203,18 +203,21 @@ put_last_in_path() {
   echo "${putlast}"
 }
 BREW_LOCATIONS=(/opt/homebrew "$HOME/.linuxbrew")
-# /usr/local/ is not listed above because I don't want /usr/local/bin/ to be
-# put last in the PATH, as the brew location will be after planned future
-# changes.
-for brew_location in ${BREW_LOCATIONS[@]} ; do
-  brew_file=${brew_location}/bin/brew
-  if [[ -e ${brew_file} ]] ; then
-    eval "$(${brew_file} shellenv)"
+for brew_location in "${BREW_LOCATIONS[@]}" ; do
+  brew_file="${brew_location}/bin/brew"
+  if [[ -x ${brew_file} ]] ; then
+    # Let Homebrew set its environment (PATH, MANPATH, etc.)
+    eval "$("${brew_file}" shellenv)"
+
+    # Ensure brew bin/sbin are at the *front* of PATH
     for d in "${brew_location}/bin" "${brew_location}/sbin" ; do
-      export PATH=$(put_last_in_path "${PATH}" "${d}")
+      if [[ -d ${d} && ":$PATH:" != *":${d}:"* ]]; then
+        PATH="${d}:${PATH}"
+      fi
     done
   fi
 done
+export PATH
 
 # Make sure /usr/local/bin is on the PATH, lower precedence than pyenv
 if [[ -d /usr/local/bin ]] ; then
