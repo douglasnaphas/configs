@@ -287,6 +287,12 @@ if [[ -e ${NON_ROOT_CONFIG} ]] ; then
   source ${NON_ROOT_CONFIG}
 fi
 
+# Agent skills bin directories
+for _skill_bin in ~/.agents/skills/*/bin; do
+  [[ -d "$_skill_bin" ]] && export PATH="$_skill_bin:$PATH"
+done
+unset _skill_bin
+
 function dedup_awk ()
 {
   echo -n "$1" | awk -v RS=':' -v ORS=':' \
